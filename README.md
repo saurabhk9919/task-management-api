@@ -9,7 +9,7 @@ npm install
 Copy-Item .env.example .env
 ```
 
-The database URL in `.env.example` is a placeholder. This starter does not connect to a database.
+Edit `.env` and set `DATABASE_URL` to your local PostgreSQL credentials. The database is named `task_management_db`. `npm install` runs `prisma generate` automatically.
 
 ## Run
 
@@ -21,11 +21,17 @@ For a non-watching start, run `npm start`.
 
 ## Prisma
 
-The PostgreSQL schema and Prisma CLI configuration are initialized. No data models or migrations are included yet.
+Prisma 7 connects to PostgreSQL through the `@prisma/adapter-pg` driver adapter. The `prisma-client-js` generator is used because it produces a CommonJS client that `require()` can load. The newer `prisma-client` generator only produces ESM TypeScript.
+
+- `prisma.config.cjs` gives the Prisma CLI its `DATABASE_URL`.
+- `src/config/prisma.js` exports one shared `prisma` client and a `checkDatabaseConnection()` helper.
+
+There are no data models or migrations yet.
 
 ```powershell
 npm run prisma:validate
 npm run prisma:generate
+npm run db:check   # verifies the PostgreSQL connection
 ```
 
 ## Source layout

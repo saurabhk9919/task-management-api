@@ -1,8 +1,13 @@
+// Prisma 7 + CommonJS JavaScript project.
+// `prisma-client-js` generates a CommonJS client (into node_modules/.prisma/client)
+// that can be loaded with `require('@prisma/client')`. The newer `prisma-client`
+// generator only emits ESM TypeScript, which this project cannot require() directly.
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
+// The connection URL is supplied by prisma.config.cjs (DATABASE_URL) for the CLI,
+// and by the @prisma/adapter-pg driver adapter at runtime (src/config/prisma.js).
 datasource db {
   provider = "postgresql"
 }
