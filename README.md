@@ -90,7 +90,7 @@ The server listens on `http://localhost:5000` by default. To use another port, c
 | `title` | String | Required |
 | `description` | String | Optional (can be `null`) |
 | `status` | Enum | `PENDING`, `IN_PROGRESS` or `COMPLETED`. Defaults to `PENDING` |
-| `createdAt` | DateTime | Set automatically when the task is created. Stored in the `created_at` column |
+| `created_at` | DateTime | Set automatically when the task is created |
 
 The schema is defined in [prisma/schema.prisma](prisma/schema.prisma).
 
@@ -130,7 +130,7 @@ Response `201 Created`:
     "title": "Complete backend assignment",
     "description": "Build a Task Management REST API",
     "status": "PENDING",
-    "createdAt": "2026-11-11T14:30:00.000Z"
+    "created_at": "2026-11-11T14:30:00.000Z"
   }
 }
 ```
@@ -151,7 +151,7 @@ Response `200 OK`:
       "title": "Complete backend assignment",
       "description": "Build a Task Management REST API",
       "status": "PENDING",
-      "createdAt": "2026-11-11T14:30:00.000Z"
+      "created_at": "2026-11-11T14:30:00.000Z"
     }
   ]
 }
@@ -202,7 +202,7 @@ Every request is validated with Zod before it reaches the controller or the data
 | `status` | Optional. Exactly `PENDING`, `IN_PROGRESS` or `COMPLETED` (uppercase) |
 | `:id` (URL) | A positive integer, up to 2147483647 |
 
-- Unknown fields such as `id` or `createdAt` are rejected. Only `title`, `description` and `status` can be set.
+- Unknown fields such as `id` or `created_at` are rejected. Only `title`, `description` and `status` can be set.
 - `PUT` requests must include at least one of `title`, `description` or `status`.
 
 ## Error responses
@@ -228,6 +228,8 @@ Validation errors (`400 Bad Request`) list every problem in the request:
 |---|---|---|
 | Invalid body or ID | `400` | `Validation failed.` (details in `errors`) |
 | Malformed JSON | `400` | `Request body contains invalid JSON.` |
+| Request body larger than 100 KB | `413` | `Request body is too large.` |
+| Unsupported body charset or Content-Encoding | `415` | `Unsupported request body charset. Use UTF-8.` |
 | Task does not exist | `404` | `Task with ID 999 not found.` |
 | Unknown route | `404` | `Route GET /api/unknown not found.` |
 | Database or server failure | `500` | `Internal server error.` (details are logged on the server only) |

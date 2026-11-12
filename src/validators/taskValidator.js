@@ -30,7 +30,7 @@ const status = z
   .enum(STATUS_VALUES, { error: `Status must be one of: ${STATUS_VALUES.join(', ')}.` })
   .optional();
 
-// strictObject rejects unknown fields such as id or createdAt.
+// strictObject rejects unknown fields such as id or created_at.
 const createTaskSchema = z.strictObject(
   { title, description, status },
   {

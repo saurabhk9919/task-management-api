@@ -23,7 +23,7 @@ model Task {
   title       String
   description String?
   status      TaskStatus @default(PENDING)
-  createdAt   DateTime   @default(now()) @map("created_at")
+  created_at  DateTime   @default(now())
 
   @@map("tasks")
 }
